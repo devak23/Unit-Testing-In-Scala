@@ -37,7 +37,7 @@ class EmailSpec extends AnyFlatSpec {
 
   it should "throw an error when it has many periods in the email address" in {
     assertThrows[IllegalArgumentException] {
-      Email("a..b.a.y.k...@gmail.com")
+      Email("a..b...h..a...y...k...@gmail.com")
     }
   }
 }
