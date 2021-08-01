@@ -6,6 +6,12 @@ import org.scalatest.flatspec.AnyFlatSpec
 class EmailSpec extends AnyFlatSpec {
   behavior of "Email Object"
 
+  it should "correctly set the local part and domain part when passed in a correct email address" in {
+    val myEmail = new Email(localPart = "abhayk", domain = "gmail.com")
+    assert(myEmail.localPart == "abhayk")
+    assert(myEmail.domain == "gmail.com")
+  }
+
   it should "correctly print out email address in human readable form" in {
     val myEmail = new Email(localPart = "abhayk", domain = "gmail.com")
     assert("abhayk@gmail.com" == myEmail.toString)
@@ -24,9 +30,9 @@ class EmailSpec extends AnyFlatSpec {
   }
 
   it should "throw an illegal argument exception for a domain of xxyyzzaa" in {
-    assertThrows[IllegalArgumentException] {
-      Email("abhayk@mymail.xxyyzzaa")
-    }
+    val exception = intercept[IllegalArgumentException] {Email("abhayk@mymail.xxyyzzaa")}
+    assert(exception.isInstanceOf[IllegalArgumentException])
+    assert(exception.getMessage.contains("email should belong to a valid domain"))
   }
 
   it should "throw an error when it has many periods in the email address" in {
