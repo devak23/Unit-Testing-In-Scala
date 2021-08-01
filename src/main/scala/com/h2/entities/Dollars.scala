@@ -12,5 +12,7 @@ class Dollars(val amount: Int) extends AnyVal with Ordered[Dollars] {
 
   def -(dollars: Dollars): Dollars = new Dollars(amount - dollars.amount)
 
+  def *(dollars: Dollars): Dollars = new Dollars(amount * dollars.amount)
+
   override def toString: String = "$" + amount
 }
