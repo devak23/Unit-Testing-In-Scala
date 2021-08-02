@@ -26,4 +26,22 @@ class StringSpec extends AnyFlatSpec with Matchers {
 
     customer.email.toString should endWith(".com")
   }
+
+  it should "correctly match the customer email includes the @ symbol" in {
+    val (first, last, email, dateOfBirth) = ("John", "Smith", "johnsmith@gmail.com", "1982/12/31")
+
+    val customerId = customerService.createNewCustomer(first, last, email, dateOfBirth)
+    val customer = customerService.getCustomer(customerId).get
+
+    customer.email.toString should include("@")
+  }
+
+  it should "correctly match the customer dateOfbirth as a fully matched regular expression" in {
+    val (first, last, email, dateOfBirth) = ("John", "Smith", "johnsmith@gmail.com", "1982/12/31")
+
+    val customerId = customerService.createNewCustomer(first, last, email, dateOfBirth)
+    val customer = customerService.getCustomer(customerId).get
+
+    customer.dateOfBirth.toString should fullyMatch regex """[0-9]{4}-[0-9]{2}-[0-9]{2}"""
+  }
 }
